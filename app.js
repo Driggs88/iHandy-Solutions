@@ -9,10 +9,12 @@ const mongoose           = require('mongoose');
 const passport           = require('passport');
 const session            = require('express-session');
 const MongoStore         = require('connect-mongo')(session);
-const authRoutes = require('./routes/authentication.js');
 const LocalStrategy      = require('passport-local').Strategy;
 const User               = require('./models/user');
 const bcrypt             = require('bcrypt');
+const multer             = require('multer');
+
+
 
 mongoose.connect('mongodb://localhost:27017/iHandy-Solutions');
 
@@ -32,6 +34,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const myUploader = multer({
+  dest: path.join(__dirname, './public/uploads')
+});
+
 
 app.use(session({
   secret: 'iHandydev',
@@ -71,6 +78,7 @@ passport.use('local-signup', new LocalStrategy(
                   username,
                   email,
                   description,
+                  imageUrl: `/uploads/${req.file.filename}`,
                   password: hashPass
                 });
 
@@ -102,7 +110,6 @@ passport.use('local-login', new LocalStrategy((username, password, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', authRoutes);
 
 app.use( (req, res, next) => {
   if (typeof(req.user) !== "undefined"){
@@ -113,6 +120,10 @@ app.use( (req, res, next) => {
   next();
 });
 
+const jobRoutes = require('./routes/jobs-route');
+app.use('/', jobRoutes)
+const authRoutes         = require('./routes/authentication.js');
+app.use('/', authRoutes);
 const index = require('./routes/index');
 app.use('/', index);
 
