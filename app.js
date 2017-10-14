@@ -61,12 +61,13 @@ passport.deserializeUser((id, cb) => {
 passport.use('local-signup', new LocalStrategy(
   { passReqToCallback: true },
   (req, username, password, next) => {
+    console.log('HERE!!!')
     // To avoid race conditions
     process.nextTick(() => {
         User.findOne({
             'username': username
         }, (err, user) => {
-            if (err){ return next(err); }
+            if (err){ console.log('ERR',err);return next(err); }
 
             if (user) {
                 return next(null, false);
@@ -78,7 +79,6 @@ passport.use('local-signup', new LocalStrategy(
                   username,
                   email,
                   description,
-                  imageUrl: `/uploads/${req.file.filename}`,
                   password: hashPass
                 });
 

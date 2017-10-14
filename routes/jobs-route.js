@@ -11,14 +11,17 @@ router.get('/job/new', ensureLoggedIn(), (req, res) => {
 });
 
 router.post('/job/new', ensureLoggedIn(), upload.single('photo'), (req, res) => {
+
     const pic = new Picture ({
       name: req.body.name,
       pic_path: `/uploads/${req.file.filename}`,
       pic_name: req.body.picName
     })
     pic.save((err) => {
+
         res.redirect('/');
     });
+
 });
 
 module.exports = router;
