@@ -1,11 +1,11 @@
 
 
 <section>
-  <h2>Upload your photo</h2>
+  <h2>Job Request Form</h2>
   <form action="/job/new" method="post" enctype="multipart/form-data">
-    <input type="text" name="name">
+    <label for="jobTitle">Job Description</label>
+    <input id="jobTitle" type="text" name="name">
     <input type="file" name="photo">
-    <input type="text" name="picName" value="">
     <input type="submit" value="Save">
   </form>
 </section>

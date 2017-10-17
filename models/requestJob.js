@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Schema   = mongoose.Schema;
+// const TYPES    = require('./requestJob');
 
-const pictureSchema = new Schema({
+const requestJobSchema = new Schema({
   name: String,
   pic_path: String,
   pic_name: String
@@ -9,5 +10,5 @@ const pictureSchema = new Schema({
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
 
-var Picture = mongoose.model("Picture", pictureSchema);
-module.exports = Picture;
+var requestJob = mongoose.model("requestJob", requestJobSchema);
+module.exports = requestJob;

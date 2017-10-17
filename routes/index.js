@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var Picture     = require('../models/pictures');
+var Picture     = require('../models/requestJob');
 
 router.get('/', function(req, res, next) {
-  Picture.find((err, pictures) => {
-    res.render('index', {pictures})
+  Picture.find((err, requestJob) => {
+    res.render('index', {requestJob})
   })
 });
 

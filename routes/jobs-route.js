@@ -4,7 +4,7 @@ const multer    = require('multer');
 const passport = require("passport");
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 const upload = multer({ dest: 'public/uploads/' });
-const Picture = require('../models/pictures')
+const RequestJob = require('../models/requestJob')
 
 router.get('/job/new', ensureLoggedIn(), (req, res) => {
     res.render('jobs/newjob');
@@ -12,12 +12,12 @@ router.get('/job/new', ensureLoggedIn(), (req, res) => {
 
 router.post('/job/new', ensureLoggedIn(), upload.single('photo'), (req, res) => {
 
-    const pic = new Picture ({
+    const job = new RequestJob ({
       name: req.body.name,
       pic_path: `/uploads/${req.file.filename}`,
-      pic_name: req.body.picName
+      pic_name: req.file.originalname
     })
-    pic.save((err) => {
+    job.save((err) => {
 
         res.redirect('/');
     });
