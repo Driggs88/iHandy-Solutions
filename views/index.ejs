@@ -1,11 +1,31 @@
 
-<% if (typeof requestJob !== 'undefined') { %>
+<!-- <% if (typeof requestJob !== 'undefined') { %>
   <section>
     <% requestJob.forEach(function(blah) { %>
       <h3><%= blah.name %></h3>
       <img src="<%= blah.pic_path %>" alt="<%= blah.pic_name %>" />
     <% })%>
   </section>
+<% } %> -->
+
+
+
+<% if (typeof requestJob !== 'undefined') { %>
+  <div class="campaign-row row">
+  <section>
+    <% requestJob.forEach(function(job) { %>
+      <div class="col-sm-3 home-campaign-box">
+      <img src="<%= job.pic_path %>" alt="<%= job.pic_name %>" />
+      <div class="campaign-info-wrapper">
+        <a class="title" href="/requestJob/<%= requestJob._id %>">
+      <h3><%= job.title %></h3>
+        </a><br>
+        by <span class="light-text"><%= requestJob._creator.username %></span><br>
+        <span class="light-text description"><%= requestJob.description %></span>
+      </div>
+    <% })%>
+  </section>
+  </div>
 <% } %>
 
 
