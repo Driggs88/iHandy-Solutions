@@ -10,6 +10,7 @@ const passport           = require('passport');
 const session            = require('express-session');
 const MongoStore         = require('connect-mongo')(session);
 const LocalStrategy      = require('passport-local').Strategy;
+const FbStrategy    = require('passport-facebook').Strategy;
 const User               = require('./models/user');
 const bcrypt             = require('bcrypt');
 const multer             = require('multer');
@@ -56,6 +57,34 @@ passport.deserializeUser((id, cb) => {
     cb(null, user);
   });
 });
+
+//Facebook Login OAuth
+passport.use(new FbStrategy({
+  clientID: "1360515567404163",
+  clientSecret: "433723ab4fc58c7674667a321c5d89e4",
+  callbackURL: "/auth/facebook/callback"
+}, (accessToken, refreshToken, profile, done) => {
+  User.findOne({ facebookID: profile.id }, (err, user) => {
+    if (err) {
+      return done(err);
+    }
+    if (user) {
+      return done(null, user);
+    }
+
+   const newUser = new User({
+      facebookID: profile.id
+    });
+
+   newUser.save((err) => {
+      if (err) {
+        return done(err);
+      }
+      done(null, newUser);
+    });
+  });
+
+}));
 
 // Signing Up
 passport.use('local-signup', new LocalStrategy(
@@ -111,11 +140,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
+
 app.use( (req, res, next) => {
   if (typeof(req.user) !== "undefined"){
     res.locals.userSignedIn = true;
   } else {
     res.locals.userSignedIn = false;
+  }
+  next();
+});
+
+
+// makes req.user available to all ejs files
+app.use( (req, res, next) => {
+  if (req.user) {
+    res.locals.user = req.user;
   }
   next();
 });

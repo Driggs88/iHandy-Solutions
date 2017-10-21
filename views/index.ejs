@@ -20,7 +20,7 @@
         <a class="title" href="/requestJob/<%= requestJob._id %>">
       <h3><%= job.title %></h3>
         </a><br>
-        by <span class="light-text"><%= requestJob._creator.username %></span><br>
+        by <span class="light-text"><%= user.username %></span><br>
         <span class="light-text description"><%= requestJob.description %></span>
       </div>
     <% })%>

@@ -5,11 +5,11 @@ const User = require('./user');
 
 
 const requestJobSchema = new Schema({
-  title         : { type: String, require: true },
+  title         : { type: String, required: true },
   category      : { type: String, enum: TYPES, required: true },
-  description   : { type: String, require: true },
-  _creator      : { type: Schema.Types.ObjectId, ref: 'User', require: true },
-  deadline      : { type: Date, require: true },
+  description   : { type: String, required: true },
+  _creator      : { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  deadline      : { type: Date, required: true },
   pic_path      : String,
   pic_name      : String
 }, {
