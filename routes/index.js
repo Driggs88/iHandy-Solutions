@@ -15,15 +15,21 @@ router.get('/', function(req, res, next) {
   // }
 
   if (req.user) {
-    // if (req.user.description === 'admin') {
-    //   RequestJob.find(
-    //     {},
-    //     (err, requestJob) => {
-    //         if (err) { return next(err); }
-    //         res.render('index', requestJob);
-    //     }
-    //   );
-    // }
+
+    // if user is an Admin
+  if (req.user.userRole === 'Admin') {
+    RequestJob.find( {} )
+    .populate('_creator')
+    .exec( (err, requestJob) => {
+      if (err) { return next(err); }
+
+      console.log('CREATOR!!!!!~~~~', requestJob[0]._creator);
+      res.render('index', {requestJob: requestJob});
+    });
+    return
+  }
+
+   // if user is a basic user
     RequestJob
     .find({_creator: req.user._id},
     (err, requestJob) => {

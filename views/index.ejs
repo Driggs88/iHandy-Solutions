@@ -9,10 +9,27 @@
 <% } %> -->
 
 
+<% if (typeof user !== 'undefined') { %>
+  <% if (user.userRole === 'Admin') { %>
+    <div class="campaign-row row">
+      <% requestJob.forEach(function(job) { %>
+        <div class="col-sm-3 home-campaign-box">
+          <img src="<%= job.pic_path %>" alt="<%= job.pic_name %>" />
+          <div class="campaign-info-wrapper">
+            <a class="title" href="/requestJob/<%= requestJob._id %>">
+              <h3><%= job.title %></h3>
+            </a><br>
+            by <span class="light-text"><%= job._creator.username %></span><br>
+            <span class="light-text description"><%= requestJob.description %></span>
+          </div>
+          <% })%>
+        </div>
+  <% } %>
+<% } %>
+
 
 <% if (typeof requestJob !== 'undefined') { %>
   <div class="campaign-row row">
-  <section>
     <% requestJob.forEach(function(job) { %>
       <div class="col-sm-3 home-campaign-box">
       <img src="<%= job.pic_path %>" alt="<%= job.pic_name %>" />
@@ -24,21 +41,19 @@
         <span class="light-text description"><%= requestJob.description %></span>
       </div>
     <% })%>
-  </section>
   </div>
 <% } %>
 
-
-    <!-- <h1></h1>
-    <p>
-
-     <div class="container-fluid">
+<% if (typeof user == 'undefined') { %>
+<div class="container-fluid">
   <div class="home-heading text-center row">
     <div class="home-heading-wrapper">
-      <h1>Creators thrive here.</h1>
-      <p>Kickstarter creators pursue bold ideas on their own terms — and make an impact on the world, too.</p>
-      <a class="btn btn-default" href="#">Read their stories</a>
+      <h1>iHandy Solutions</h1>
+      <p>iHandy Solutions is a family own business that provides house services of all kinds.</p>
+      <% if (typeof user == 'undefined') { %>
+      <a class="btn btn-default" href="/signup">Get Started</a>
+      <% } %>
     </div>
   </div>
 </div>
-</p> -->
+<% } %>

@@ -17,6 +17,13 @@ router.get('/signup', ensureLoggedOut(), (req, res) => {
     res.render('authentication/signup');
 });
 
+//facebook
+router.get("/auth/facebook", passport.authenticate("facebook"));
+router.get("/auth/facebook/callback", passport.authenticate("facebook", {
+  successRedirect: "/",
+  failureRedirect: "/login"
+}));
+
 router.post('/signup', ensureLoggedOut(), passport.authenticate('local-signup', {
   successRedirect : '/',
   failureRedirect : '/signup'
