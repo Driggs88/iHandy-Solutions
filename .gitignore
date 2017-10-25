@@ -31,3 +31,6 @@ npm-debug.log
 
 # Bower Components
 bower_components
+
+# Ignore development environment variables
+.env
