@@ -17,8 +17,10 @@ const multer             = require('multer');
 
 
 
-mongoose.connect('mongodb://localhost:27017/iHandy-Solutions');
+// mongoose.connect('mongodb://localhost:27017/iHandy-Solutions');
+require('dotenv').config();
 
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 // view engine setup
@@ -60,9 +62,9 @@ passport.deserializeUser((id, cb) => {
 
 //Facebook Login OAuth
 passport.use(new FbStrategy({
-  clientID: "1360515567404163",
-  clientSecret: "433723ab4fc58c7674667a321c5d89e4",
-  callbackURL: "/auth/facebook/callback"
+  clientID: process.env.FB_APP_ID,
+  clientSecret: process.env.FB_APP_SECRET,
+  callbackURL: '/auth/facebook/callback'
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ facebookID: profile.id }, (err, user) => {
     if (err) {
@@ -90,7 +92,6 @@ passport.use(new FbStrategy({
 passport.use('local-signup', new LocalStrategy(
   { passReqToCallback: true },
   (req, username, password, next) => {
-    console.log('HERE!!!')
     // To avoid race conditions
     process.nextTick(() => {
         User.findOne({

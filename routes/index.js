@@ -22,8 +22,6 @@ router.get('/', function(req, res, next) {
     .populate('_creator')
     .exec( (err, requestJob) => {
       if (err) { return next(err); }
-
-      console.log('CREATOR!!!!!~~~~', requestJob[0]._creator);
       res.render('index', {requestJob: requestJob});
     });
     return

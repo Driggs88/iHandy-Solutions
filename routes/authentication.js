@@ -18,10 +18,10 @@ router.get('/signup', ensureLoggedOut(), (req, res) => {
 });
 
 //facebook
-router.get("/auth/facebook", passport.authenticate("facebook"));
-router.get("/auth/facebook/callback", passport.authenticate("facebook", {
-  successRedirect: "/",
-  failureRedirect: "/login"
+router.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/login'
 }));
 
 router.post('/signup', ensureLoggedOut(), passport.authenticate('local-signup', {
