@@ -68,9 +68,11 @@ passport.use(new FbStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ facebookID: profile.id }, (err, user) => {
     if (err) {
+
       return done(err);
     }
     if (user) {
+      console.log('FOUND USER!!!!', user);
       return done(null, user);
     }
 
@@ -79,9 +81,11 @@ passport.use(new FbStrategy({
     });
 
    newUser.save((err) => {
+
       if (err) {
         return done(err);
       }
+      console.log("USER~~~~~");
       done(null, newUser);
     });
   });

@@ -26,7 +26,8 @@ router.post('/job/new', ensureLoggedIn(), upload.single('photo'), (req, res) => 
       if (err) {
         res.render('jobs/newjob', { requestJob: newjob, types: TYPES });
       } else {
-        res.redirect(`/jobs/${newjob._id}`);
+        // res.redirect(`/jobs/${newjob._id}`);
+        res.redirect('/');
       }
     });
 
