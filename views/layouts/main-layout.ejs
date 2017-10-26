@@ -35,6 +35,7 @@
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <% if (typeof user == 'undefined') { %>
+                <li><a href="/signup">Signup</a></li>
                 <li><a href="/login">Login</a></li>
                 <% } %>
                 <% if (typeof user !== 'undefined') { %>
