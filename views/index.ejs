@@ -14,28 +14,38 @@
 <% if (requestJob.length > 0) { %>
   <div class="campaign-row row">
     <% requestJob.forEach(function(job) { %>
-      <div class="col-sm-3 home-campaign-box">
-        <h3><%= job.title %></h3>
-      <img src="<%= job.pic_path %>" alt="<%= job.pic_name %>" />
-      <div class="campaign-info-wrapper">
+      <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-6">
+      <!-- <div class="col-sm-3 home-campaign-box"> -->
+                  <h3><%= job.title %></h3>
+                    <img src="<%= job.pic_path %>" alt="<%= job.pic_name %>" />
+                      <div class="campaign-info-wrapper">
         <!-- <a class="title" href="<%= requestJob._id %>"> -->
         <!-- </a> -->
-        <li>
         <span class="light-text description"><%= job.description %></span>
-      </li>
       <br>
       <% if (user.userRole === 'Admin') { %>
         By: <span class="light-text"><%= job._creator.username %></span>
       <% } %>
-      <br>
-      <span><a href="/<%= job._id %>/edit">Edit</a></span>
+      <div class="">
+
       <form class="" action="/<%= job._id %>/delete" method="post">
+        <span><a href="/<%= job._id %>/edit">Edit</a></span>
         <button  name="button">Delete</button>
       </form>
+    </div>
       </div>
     </div>
-    <% })%>
+  </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<% })%>
 <% } %>
 <% } %>
 

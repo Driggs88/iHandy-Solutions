@@ -11,6 +11,7 @@ module.exports = [
   "Landscaping",
   "Painting",
   "Plumbing",
+  "Roofing",
   "Sprinkler Repair",
   "Swimming Pool",
   "Window Cleaning",
