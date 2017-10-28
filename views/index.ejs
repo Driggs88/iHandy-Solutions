@@ -24,8 +24,14 @@
         <span class="light-text description"><%= job.description %></span>
       </li>
       <br>
-      By: <span class="light-text"><%= job._creator.username %></span>
+      <% if (user.userRole === 'Admin') { %>
+        By: <span class="light-text"><%= job._creator.username %></span>
+      <% } %>
       <br>
+      <span><a href="/<%= job._id %>/edit">Edit</a></span>
+      <form class="" action="/<%= job._id %>/delete" method="post">
+        <button  name="button">Delete</button>
+      </form>
       </div>
     </div>
     <% })%>

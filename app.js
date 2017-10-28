@@ -72,7 +72,6 @@ passport.use(new FbStrategy({
       return done(err);
     }
     if (user) {
-      console.log('FOUND USER!!!!', user);
       return done(null, user);
     }
 
@@ -85,7 +84,6 @@ passport.use(new FbStrategy({
       if (err) {
         return done(err);
       }
-      console.log("USER~~~~~");
       done(null, newUser);
     });
   });
@@ -101,7 +99,7 @@ passport.use('local-signup', new LocalStrategy(
         User.findOne({
             'username': username
         }, (err, user) => {
-            if (err){ console.log('ERR',err);return next(err); }
+            if (err){ return next(err); }
 
             if (user) {
                 return next(null, false);
@@ -165,12 +163,12 @@ app.use( (req, res, next) => {
   next();
 });
 
-const jobRoutes = require('./routes/jobs-route');
-app.use('/', jobRoutes)
 const authRoutes         = require('./routes/authentication.js');
 app.use('/', authRoutes);
 const index = require('./routes/index');
 app.use('/', index);
+const jobRoutes = require('./routes/jobs-route');
+app.use('/', jobRoutes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

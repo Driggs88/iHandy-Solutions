@@ -5,7 +5,9 @@ const multer    = require('multer');
 const passport = require("passport");
 const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 const upload = multer({ dest: 'public/uploads/' });
-const RequestJob = require('../models/requestJob')
+const RequestJob = require('../models/requestJob');
+const { authorizeJob, checkOwnership } = require('../middleware/job-authorization');
+
 
 router.get('/job/new', ensureLoggedIn(), (req, res) => {
     res.render('jobs/newjob', { types: TYPES });
@@ -30,7 +32,47 @@ router.post('/job/new', ensureLoggedIn(), upload.single('photo'), (req, res) => 
         res.redirect('/');
       }
     });
-
 });
+
+// routes to Edit jobs
+router.get('/:id/edit', ensureLoggedIn('/login'),  (req, res, next) => {
+  RequestJob.findById(req.params.id, (err, job) => {
+    if (err)       { return next(err) }
+    if (!job) { return next(new Error("404")) }
+    return res.render('jobs/edit', { job, types: TYPES })
+  });
+});
+
+
+// Find and Update record
+router.post('/:id/edit', ensureLoggedIn('/login'), (req, res, next) => {
+  const updates = {
+    title: req.body.title,
+    description: req.body.description,
+    category: req.body.category,
+    deadline: req.body.deadline
+  };
+
+  RequestJob.findByIdAndUpdate(req.params.id, updates, (err, job) => {
+    if (err) {
+      return res.render('jobs/edit', {
+        job,
+        errors: job.errors
+      });
+    }
+    if (!job) {
+      return next(new Error('404'));
+    }
+    return res.redirect(`/`);
+  });
+});
+router.post('/:id/delete', (req, res, next) => {
+  RequestJob.findByIdAndRemove(req.params.id, (err, job) => {
+    if (err) {
+      return next(err);
+    }
+    return res.redirect('/');
+  })
+})
 
 module.exports = router;

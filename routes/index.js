@@ -4,16 +4,6 @@ var RequestJob     = require('../models/requestJob');
 
 router.get('/', function(req, res, next) {
 
-  // if (req.user) {
-  //   RequestJob
-  //   .findOne({_creator: req.user._id})
-  //   .populate('_creator')
-  //   .exec((err, requestJob) => {
-  //     console.log('JOB CREATOR!!!!!!!',requestJob._creator)
-  //     res.render('index', {requestJob});
-  //   })
-  // }
-
   if (req.user) {
 
     // if user is an Admin
@@ -24,7 +14,7 @@ router.get('/', function(req, res, next) {
       if (err) { return next(err); }
       res.render('index', {requestJob: requestJob});
     });
-    return
+    return;
   }
 
    // if user is a basic user
